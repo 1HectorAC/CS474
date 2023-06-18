@@ -7,38 +7,36 @@ namespace cs474Lab4
 {
     class Program
     {
-        const int sectionSize = 2000000;
+        const int sectionSize = 20000000;
 
         private static int CC = Environment.ProcessorCount;
 
         private static readonly int Chunk = sectionSize / CC;
 
-
-
         //This will get the height value of of a specified x value location.
-        static double GetHeight(double location)
-        {
-            return (4 / (1 + (location * location)));
-        }
+        static double GetHeight(double location) =>  (4 / (1 + (location * location)));
 
-        //This will get the X position inbetween given a section size and n
-        static double GetXValue(int n, double section)
-        {
-            return n * section + section / 2;
-        }
+        //This will get the X position inbetween given a section size and n.
+        static double GetXValue(int n, double section) => n * section + section / 2;
 
+        /// <summary>
+        /// This method will sequentially calculate the area under the curve.
+        /// </summary>
+        /// <returns>The total value</returns>
         static double SequentialAreaUnderSum()
         {
             double total = 0;
 
             //loops through every section and adds rectangles.
             for (int i = 0; i < sectionSize; i++)
-            {
                 total += (GetHeight(GetXValue(i, 1.0 * 1 / sectionSize)) * 1 / sectionSize);
-            }
             return total;
         }
 
+        /// <summary>
+        /// This method will parallelly calculate the area under the curve.
+        /// </summary>
+        /// <returns>The total value</returns>
         static double ParallelAreaUnderSum()
         {
             double total = 0;
@@ -64,28 +62,24 @@ namespace cs474Lab4
             return total;
         }
 
-
-
         static void Main(string[] args)
         {
-            Console.WriteLine("Section Size: " + sectionSize);
+            Console.WriteLine("Area Under Curve Algorithm Comparison");
+            Console.WriteLine($"Section Size: {sectionSize}\nChunk Size: {Chunk}\n");
 
             Stopwatch stopWatch = new Stopwatch();
             Console.WriteLine("Sequential Algorithm:");
             stopWatch.Start();
             double result1 = SequentialAreaUnderSum();
             stopWatch.Stop();
-            Console.WriteLine("Result: " + result1);
-            Console.WriteLine("Time: " + stopWatch.ElapsedMilliseconds);
+            Console.WriteLine($"Result: {result1}\nTime: {stopWatch.ElapsedMilliseconds}ms\n");
 
             stopWatch.Reset();
             Console.WriteLine("Parallel Algorithm:");
             stopWatch.Start();
             double result2 = ParallelAreaUnderSum();
             stopWatch.Stop();
-            Console.WriteLine("Result: " + result2);
-            Console.WriteLine("Time: " + stopWatch.ElapsedMilliseconds);
-
+            Console.WriteLine($"Result: {result2}\nTime: {stopWatch.ElapsedMilliseconds}ms\n");
         }
     }
 }
