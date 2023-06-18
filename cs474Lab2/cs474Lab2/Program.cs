@@ -8,7 +8,7 @@ namespace cs474Lab2
     {
 
         //Declaring constant variable SIZE.
-        const int SIZE = 20000000;
+        const int SIZE = 200000000;
 
         /// <summary>
         /// This function will return the largest number of an inputted array using a sequential search.
@@ -27,27 +27,13 @@ namespace cs474Lab2
         }
 
         /// <summary>
-        /// This function will return the largest number of an inputted array. Search is done in parallel with parallel algorithm. No control of task size.
-        /// </summary>
-        /// <param name="array">The array that will be searched.</param>
-        /// <returns></returns>
-        static int LargestNumberFinderParallel(int[] array)
-        {
-            int largestNum = array[0];
-
-            Parallel.ForEach(array, i => {
-                if (i > largestNum)
-                    largestNum = i;
-            });
-            return largestNum;
-        }
-
-        /// <summary>
         /// This function will return the largest number of an inputted array. Search is done in parallel with parallel algorithm.
         /// </summary>
         /// <param name="array">The array that will be searched.</param>
+        /// <param name="chunk">The size of the chunk each process will look through.</param>
         /// <returns></returns>
-        static int LargestNumberFinderParallel2(int[] array, int chunk)
+        
+        static int LargestNumberFinderParallel(int[] array, int chunk)
         {
             int largestNum = array[0];
             Parallel.For(0, SIZE / chunk, i => {
@@ -63,11 +49,27 @@ namespace cs474Lab2
             return largestNum;
         }
 
+        /// <summary>
+        /// This function will return the largest number of an inputted array. Search is done in parallel with parallel algorithm. No control of task size.
+        /// </summary>
+        /// <param name="array">The array that will be searched.</param>
+        /// <returns></returns>
+        static int LargestNumberFinderParallel2(int[] array)
+        {
+            int largestNum = array[0];
+
+            Parallel.ForEach(array, i => {
+                if (i > largestNum)
+                    largestNum = i;
+            });
+            return largestNum;
+        }
+
 
         static void Main(string[] args)
         {
             //Setting up variables.
-            int chunkSize = 20000000 / Environment.ProcessorCount;
+            int chunkSize = SIZE / Environment.ProcessorCount;
             int[] array = new int[SIZE];
 
             Console.WriteLine("SIZE: " + SIZE);
@@ -75,12 +77,11 @@ namespace cs474Lab2
 
 
             //Filling the array sequentially with random numbers.
-            Console.WriteLine("Running generation of random numbers for the array...");
+            Console.WriteLine("Generating random numbers for the array...");
             Random random = new Random();
             for (int i = 0; i < SIZE; i++)
             {
                 array[i] = random.Next();
-                //Console.Write(array[i] + " " );
             }
 
             //Finding the largest random number sequentially and recording the time.
@@ -89,24 +90,25 @@ namespace cs474Lab2
             stopWatch.Start();
             int largestNum = LargestNumberFinderSequential(array);
             stopWatch.Stop();
-            Console.WriteLine("Time: " + stopWatch.Elapsed + "\nLargest Number:" + largestNum + "\n");
+            Console.WriteLine($"Time: {stopWatch.Elapsed}\nLargest Number: {largestNum}\n");
             stopWatch.Reset();
 
-            /*
+            
             //Finding the largest random number in parallel and recording the time.
-            Console.WriteLine("Running parallel largest number search...");
+            Console.WriteLine("Running parallel largest number search 1 (For loop with chunks ver.)...");
             stopWatch.Start();
-            int largestNum2 = LargestNumberFinderParallel(array);
+            int largestNum2 = LargestNumberFinderParallel(array, chunkSize);
             stopWatch.Stop();
-            Console.WriteLine("Time: " + stopWatch.Elapsed + "\nLargest Number:" + largestNum2);
-            */
+            Console.WriteLine($"Time: {stopWatch.Elapsed}\nLargest Number: {largestNum2}\n");
 
-            //Finding the largest random number in parallel and recording the time. Note that chunk size must me set in this version.
-            Console.WriteLine("Running parallel largest number search...");
+            
+            //Finding the largest random number in parallel and recording the time. Note that chunk size must be set in this version.
+            Console.WriteLine("Running parallel largest number search 2 (Foreach ver.)...");
             stopWatch.Start();
-            int largestNum2 = LargestNumberFinderParallel2(array, chunkSize);
+            int largestNum3 = LargestNumberFinderParallel2(array);
             stopWatch.Stop();
-            Console.WriteLine("Time: " + stopWatch.Elapsed + "\nLargest Number:" + largestNum2);
+            Console.WriteLine($"Time: {stopWatch.Elapsed}\nLargest Number: {largestNum3}\n");
+            
 
         }
     }
