@@ -54,7 +54,6 @@ namespace CS474AreaUnderCurve
             });
             return total;
         }
-        static bool CompareCheck(double val1, double val2) => val1 == val2;
 
         static void Main()
         {
@@ -75,16 +74,15 @@ namespace CS474AreaUnderCurve
                 stopWatch.Start();
                 double result1 = SequentialAreaUnderSum(size);
                 stopWatch.Stop();
-                Console.WriteLine($"Sequential Algorithm Time: {stopWatch.ElapsedMilliseconds}ms");
+                Console.WriteLine($"Sequential Algorithm Time: {stopWatch.ElapsedMilliseconds}ms, Value:  {result1}");
                 stopWatch.Reset();
 
                 // Parallel run.
                 stopWatch.Start();
                 double result2 = ParallelAreaUnderSum(size, chunkSize);
                 stopWatch.Stop();
-                Console.WriteLine($"Parallel Algorithm Time: {stopWatch.ElapsedMilliseconds}ms");
+                Console.WriteLine($"Parallel Algorithm Time: {stopWatch.ElapsedMilliseconds}ms, Value: {result2}\n");
                 stopWatch.Reset();
-                Console.WriteLine($"Equal Check: {CompareCheck(Math.Round(result1), Math.Round(result2))}\n");
             }
         }
     }
