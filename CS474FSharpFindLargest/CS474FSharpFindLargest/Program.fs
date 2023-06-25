@@ -23,8 +23,8 @@ let ParallelLargestAlgorithm (arr:array<_>, chunk: int) =
         let start1 = i * chunk
         let end1 = (i + 1) * chunk
         let mutable localMax = start1
-        for i in start1.. (end1 - 1) do (localMax <- GetLargestBetweenTwoInArray(i,localMax,arr)) |> ignore
-        lock (monitor) (fun () -> maxIndex <- GetLargestBetweenTwoInArray(localMax, maxIndex,arr)) |> ignore
+        for i in start1.. (end1 - 1) do (localMax <- GetLargestBetweenTwoInArray(i,localMax,arr))
+        lock (monitor) (fun () -> maxIndex <- GetLargestBetweenTwoInArray(localMax, maxIndex,arr))
          ) |> ignore
     arr[maxIndex]
 
