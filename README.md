@@ -6,14 +6,14 @@ This repositry holds some of the assignments from my cs474 class. Note that only
 
 This assignment was done in the programming language f# on Visual Studio. The program runs both a parallel and sequential version of a basic search for the largest number in an array with randomly generated integers. It then prints out the run time for both versions.
 
-## cs474FindLargest
+## CS474FindLargest
 
 This assignment was done in the programming language c# on Visual Studio. The program runs both a parallel and sequential version of a basic search for the largest number in an array with randomly generated integers. It then prints out the run time for both versions.
 
-## cs474AreaUnderCurve
+## CS474AreaUnderCurve
 
 This assignment was done in the programming language c# on Visual Studio. This program has a parallel and sequential version of a way to calculate the area under the curve of a graph or derivitive. Note that it solves for specific values and it isn't generalized to calculate for any sort of equation. It then prints out the time for both versions to run.
 
-## project/PrimeRange.py
+## CS474PrimeRange
 
 This assignment was done in the programming language python. The program will first generate a list with random integers in it. It then runs a parallel and sequential version of finding the mathmatical range (highest number - lowest number) of the prime numbers in the list. It then shows the time it takes for both versions to run.
