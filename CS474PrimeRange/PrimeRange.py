@@ -32,7 +32,6 @@ def Is_prime(a):
 def FindSmallestPrime(list):
 	lowestPrime = 0
 	for x in list:
-		#print(x)
 		if(Is_prime(int(x))):
 			if(x < lowestPrime or lowestPrime==0):
 				lowestPrime = x
@@ -42,7 +41,6 @@ def FindSmallestPrime(list):
 def FindLargestPrime(list):
 	largestPrime = 0
 	for x in list:
-		#print(x)
 		if(Is_prime(int(x))):
 			if(x > largestPrime or largestPrime==0):
 				largestPrime = x
@@ -68,7 +66,6 @@ def SequentialRun(list):
 def FindSmallestPrimeWithQueue(queue,list):
 	lowestPrime = 0
 	for x in list:
-		#print(x)
 		if(Is_prime(int(x))):
 			if(x < lowestPrime or lowestPrime==0):
 				lowestPrime = x
@@ -79,7 +76,6 @@ def FindSmallestPrimeWithQueue(queue,list):
 def FindLargestPrimeWithQueue(queue,list):
 	largestPrime = 0
 	for x in list:
-		#print(x)
 		if(Is_prime(int(x))):
 			if(x > largestPrime or largestPrime==0):
 				largestPrime = x
@@ -129,10 +125,7 @@ if __name__ == '__main__':
 	print("Max value in list:" + str(maxValue))
 	
 	#Generate list with random numbers.
-	print("\nGenerating list...")
 	list = MakesRandomList(sizeOfList,maxValue)
-	print("Done generating list")
-	#PrintList(list)
 	
 	#Sequential run.
 	print("\nSequential")
@@ -145,7 +138,3 @@ if __name__ == '__main__':
 	t2 = time.time()
 	ParallelRun(list)
 	print("Time: " + str(time.time() - t2))
-	
-	
-	
-	
