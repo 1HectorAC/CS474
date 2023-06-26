@@ -1,8 +1,6 @@
 import multiprocessing  
 from multiprocessing import Process
 import random
-from math import sqrt
-from itertools import islice,count
 import time
 
 #Make a list with random numbers with a specfied length and max size of values.
@@ -11,18 +9,13 @@ def MakesRandomList(length, max):
 	for x in range(0,length):
 		testList.append(random.randrange(0, max))
 	return testList
-	
-#prints values in list.
-def PrintList(list):
-	for x in list:
-		print(x)
 		
 #Checks if inputed value is a prime.
-def Is_prime(a):
-	if a < 2:
+def Is_prime(n):
+	if(n < 2):
 		return False
-	for x in islice(count(2),int(sqrt(a)-1)):
-		if a % x == 0:
+	for i in range(2,n):
+		if (n%i) == 0:
 			return False
 	return True
 	
@@ -54,11 +47,7 @@ def SequentialRun(list):
 	if(listLargestPrime == 0):
 		print("No primes found")
 	else:
-		listPrimeRange = listLargestPrime - listSmallestPrime
-		#Output the results.
-		print("Largest prime: "+ str(listLargestPrime))
-		print("Smallest prime: "+ str(listSmallestPrime))
-		print("Range of primes: "+ str(listPrimeRange))
+		return listLargestPrime - listSmallestPrime
 		
 ##################################### Parallel Version ################################################
 
@@ -94,7 +83,6 @@ def ParallelRun(list):
 	p.join()
 	p2.join()
 	
-	#Output the results.
 	entry = queue.get()
 	entry2 = queue.get()
 	if(entry == 0):
@@ -102,25 +90,18 @@ def ParallelRun(list):
 	else:
 		listPrimeRange = 0
 		#Make check to subtract largests number first.
-		#Output the Results
 		if(entry > entry2):
-			listPrimeRange = entry - entry2
-			print("Largest prime: "+ str(entry))
-			print("Smallest prime: "+ str(entry2))
-			print("Range of primes: "+ str(listPrimeRange))
+			return entry - entry2
 		else:
-			listPrimeRange = entry2 - entry
-			print("Largest prime: "+ str(entry2))
-			print("Smallest prime: "+ str(entry))
-			print("Range of primes: "+ str(listPrimeRange))
+			return entry2 - entry
 		
 ###################################### Main ################################################
 
 if __name__ == '__main__':
 	print("Running PrimeRange.py")
 	#Setup some variables.
-	sizeOfList = 1000000
-	maxValue = 200000
+	sizeOfList = 10000
+	maxValue = 100000
 	print("Size of List:" + str(sizeOfList))
 	print("Max value in list:" + str(maxValue))
 	
@@ -130,11 +111,14 @@ if __name__ == '__main__':
 	#Sequential run.
 	print("\nSequential")
 	t1 = time.time()
-	SequentialRun(list)
+	result1 = SequentialRun(list)
 	print("Time: " + str(time.time() - t1))
+	print("Range of primes: "+ str(result1))
+
 	
 	#Parallel run.
 	print("\nParallel")
 	t2 = time.time()
-	ParallelRun(list)
+	result2 = ParallelRun(list)
 	print("Time: " + str(time.time() - t2))
+	print("Range of primes: "+ str(result2))
